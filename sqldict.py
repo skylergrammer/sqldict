@@ -40,13 +40,13 @@ class SqlDict(object):
         cur = self.conn.cursor()
         cur.execute("SELECT val FROM kv_store WHERE key=? LIMIT 1", (key,))
         res = cur.fetchone()
-        if res is not None:
+        try:
             if not self.deserialize:
                 return str(res[0])
             else:
                 return loads(str(res[0]))
-        else:
-            return default
+        except LookupError, e:
+            print(e)
 
     def get(self, key, default):
         return self.__getitem__(key, default)
