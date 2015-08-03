@@ -11,5 +11,5 @@
 database_name = "test_database.db"
 sql_dict = SqlDict(database_name)
 print(sql_dict["key"])
-value
+>>> value
 ```
