@@ -59,7 +59,7 @@ class SqlDict(object):
 
     def values(self):
         cur = self.conn.cursor()
-        cur.execute("SELECT val FROM kv_store")
+        cur.execute("k val FROM kv_store")
         res = (x[0] for x in cur)
         return res
 
