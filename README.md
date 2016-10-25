@@ -10,5 +10,8 @@
 database_name = "test_database.db"
 sql_dict = SqlDict(database_name)
 print(sql_dict["key"])
->>> value
+>>> "value1"
+sql_dict["new_key"] = "value2"
+print(sql_dict["new_key"])
+>>> "value2"
 ```
