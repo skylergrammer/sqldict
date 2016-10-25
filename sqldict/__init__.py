@@ -3,13 +3,14 @@ from pickle import loads, dumps
 from os.path import expanduser
 import sys
 
+
 def make_sql_table(kv_list, db_name, key_format="String", value_format="BLOB"):
     conn = connect(db_name)
     c = conn.cursor()
-    c.execute('''CREATE TABLE kv_store (key %s PRIMARY KEY, val  %s)''' %
-              (key_format, value_format))
+    c.execute('''CREATE TABLE kv_store (key {} PRIMARY KEY, val  {})'''
+              .format(key_format, value_format))
     for k,v in kv_list:
-        c.execute('INSERT INTO kv_store VALUES (?,?)', (k, dumps(v)))
+        c.execute('INSERT OR IGNORE INTO kv_store VALUES (?,?)', (k, dumps(v)))
 
     conn.commit()
     conn.close()
@@ -36,13 +37,13 @@ class SqlDict(object):
                     (self.__val_col, self.__tablename, self.__key_col), (key,))
         res = cur.fetchone()
         try:
-          if not self.deserialize:
-              return res[0]
-          else:
-              return loads(res[0])
+            if not self.deserialize:
+                return res[0]
+            else:
+                return loads(res[0])
         except:
-          raise KeyError
-          
+            raise KeyError
+
     def get(self, key, default):
         return self.__getitem__(key, default)
 
