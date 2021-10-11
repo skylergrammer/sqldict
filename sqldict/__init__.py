@@ -5,7 +5,7 @@ import sys
 
 
 def make_sql_table(kv_list, db_name, key_format="String", value_format="BLOB", serializer=pickle):
-    with connect(self.name) as conn:
+    with connect(db_name) as conn:
         cur = conn.cursor()
         cur.execute('''CREATE TABLE kv_store (key {} PRIMARY KEY, val  {})'''
                     .format(key_format, value_format))
